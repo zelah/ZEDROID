@@ -1,0 +1,102 @@
+(symbol-character) "character"
+comment: "character" is #@ -> returns characters for constructing an identifier
+(003) "char=?" "character" #@
+(003) "list" #@ #@
+
+(symbol-character) "character"
+comment: "character" is #[ -> returns characters for constructing an identifier
+(003) "char=?" "character" #[
+(003) "list" #@ #1
+
+(symbol-character) "character"
+comment: "character" is #] -> returns characters for constructing an identifier
+(003) "char=?" "character" #]
+(003) "list" #@ #2
+
+(symbol-character) "character"
+comment: "character" is #{ -> returns characters for constructing an identifier
+(003) "char=?" "character" #{
+(003) "list" #@ #3
+
+(symbol-character) "character"
+comment: "character" is #} -> returns characters for constructing an identifier
+(003) "char=?" "character" #}
+(003) "list" #@ #4
+
+(symbol-character) "character"
+comment: "character" is #' -> returns characters for constructing an identifier
+(003) "char=?" "character" #'
+(003) "list" #@ #q
+
+(symbol-character) "character"
+comment: "character" is #` -> returns characters for constructing an identifier
+(003) "char=?" "character" #`
+(003) "list" #@ #Q
+
+(symbol-character) "character"
+comment: "character" is #, -> returns characters for constructing an identifier
+(003) "char=?" "character" #,
+(003) "list" #@ #c
+
+(symbol-character) "character"
+comment: "character" is #: -> returns characters for constructing an identifier
+(003) "char=?" "character" #:
+(003) "list" #@ #C
+
+(symbol-character) "character"
+comment: "character" is #; -> returns characters for constructing an identifier
+(003) "char=?" "character" #;
+(003) "list" #@ #s
+
+(symbol-character) "character"
+comment: "character" is #\ -> returns characters for constructing an identifier
+(003) "char=?" "character" #\
+(003) "list" #@ #b
+
+(symbol-character) "character"
+comment: "character" has a graphical representation -> returns characters for constructing an identifier
+"#t"
+(002) "list" "character"
+
+(zedefy) "string"
+comment: takes "string" -> prepends ""ZED"" and returns a symbol
+"#t"
+(002) "string->symbol"
+          (002) "list->string"
+                    (003) "append"
+                              (004) "list" #Z #E #D
+                              (002) "flatten" 
+                                        (003) "map"
+                                                  symbol-character
+                                                  (002) "string->list" "string"
+
+(tails) "number" "list"
+comment: empty "list" -> removes "number" elements from the head of "list"
+(002) "null?" "list"
+"list"
+
+(tails) "number" "list"
+comment: "number" is zero -> removes "number" elements from the head of "list"
+(003) "=" "number" 0
+"list"
+
+(tails) "number" "list"
+comment: number is positive -> removes "number" elements from the head of "list"
+(003) ">" "number" 0
+(tails) (003) "-" "number" 1
+          (002) "cdr" "list"
+
+("flatten") "object"
+comment: empty object -> flattens object into a list
+(002) "null?" "object"
+"object"
+
+("flatten") "object"
+comment: not pair object -> flattens object into a list
+(002) "not" (002) "pair?" "object"
+(002) "list" "object"
+
+("flatten") "object"
+comment: pair object -> flattens object into a list
+"#t"
+(003) "append" ("flatten") (002) "car" "object" ("flatten") (002) "cdr" "object"
