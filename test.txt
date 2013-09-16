@@ -1,3 +1,113 @@
+
+
+(gather1) "how-many" "expression" "arity-hash" "schemefied"
+comment:
+"#t"
+(003) "append"
+      "schemefied"
+      (gather) (003) "-" "how-many" 1
+               (tails) (002) "length"
+                             (002) "flatten" "schemefied"
+                       "expression"
+               "arity-hash"
+
+(gather) "how-many" "expression" "arity-hash"
+comment:
+(002) "zero?" "how-many"
+"'()"
+
+(gather) "how-many" "expression" "arity-hash"
+comment:
+(application?) "expression"
+(gather1) "how-many" 
+          "expression" 
+          "arity-hash" 
+          (schemefy) "expression" "arity-hash"
+
+(gather) "how-many" "expression" "arity-hash"
+comment:
+"#t"
+(003) "cons" (002) "car" "expression"
+             (gather) (003) "-" "how-many" 1
+                      (002) "cdr" "expression"
+                      "arity-hash"
+
+(schemefy2) "expression" "arity-hash" "schemefied"
+comment:
+"#t"
+(003) "cons" 
+      (function) "expression"
+      (003) "cons"
+            "schemefied"
+            (gather) (003) "-"
+                           (arity) "arity-hash" 
+                                   (function) "expression"
+                           1
+                     (tails) (003) "+"
+                                   1
+                                   (002) "length"
+                                         (002) "flatten" "schemefied"
+                             "expression"
+                     "arity-hash"
+
+(schemefy1) "expression" "arity-hash"
+comment: (1 2 3) ((+ . 2) (square . 1) (zero . 0))
+(002) "not" (application?) "expression"
+(002) "car" "expression"
+
+(schemefy1) "expression" "arity-hash"
+comment: ((zero) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
+(002) "zero?" (arity) "arity-hash" (function) "expression"
+(002) "car" "expression"
+
+(schemefy1) "expression" "arity-hash"
+comment: ((+) (+) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
+(double-application?) "expression"
+(schemefy2) "expression"
+            "arity-hash" 
+            (schemefy1) (002) "cdr" "expression"
+                        "arity-hash"
+
+(schemefy1) "expression" "arity-hash"
+comment: ((+) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
+(application?) "expression"
+(003) "cons" (function) "expression"
+             (gather) (arity) "arity-hash" (function) "expression"
+                      (002) "cdr" "expression"
+                      "arity-hash"
+
+(schemefy) "expression" "arity-hash"
+comment: returns a scheme expression
+"#t"
+(002) "list" (schemefy1) "expression" "arity-hash"
+
+(double-application?) "expression"
+comment: empty "expression" -> is it a double application
+(002) "null?" "expression"
+"#f"
+
+(double-application?) "expression"
+comment: empty tail "expression" -> is it a double application
+(002) "null?" (002) "cdr" "expression"
+"#f"
+
+(double-application?) "expression"
+comment: two pairs "expression" -> is it a double application
+"#t"
+(003) "and" (002) "pair?" (002) "car" "expression"
+            (002) "pair?" (002) "cadr" "expression"
+
+(function) "expression"
+comment: (+) 1 2
+"#t"
+(002) "caar" "expression"
+          
+(application?) "expression"
+comment: (+) 1 2
+"#t"
+(003) "and" (002) "not" (002) "null?" "expression"
+            (002) "pair?" (002) "car" "expression"
+
 (primitives)
 comment: definitions for the primitives
 "#t"
