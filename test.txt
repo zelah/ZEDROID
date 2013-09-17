@@ -1,535 +1,773 @@
+(gather-count?) "symbol"
+comment:
+"#t"
+(gather-count?1) (002) "string->list" 
+                       (002) "symbol->string" "symbol"
+
+
+
+
+(gather-count?1) "candidate"
+comment:
+"#t"
+(008) "and" (003) "=" 6 (002) "length" "candidate"
+            (003) "eqv?" #Z (002) "car" "candidate"
+            (003) "eqv?" #E (002) "cadr" "candidate"
+            (003) "eqv?" #D (002) "caddr" "candidate"
+            (003) "eqv?" #0 (002) "cadddr" "candidate"
+            (digit?) (002) "car" (002) "cddddr" "candidate"
+            (digit?) (002) "cadr" (002) "cddddr" "candidate"
+
+
+
+
+(digit?) "character"
+comment:
+"#t"
+(011) "or" (003) "eqv?" #0 "character"
+           (003) "eqv?" #1 "character"
+           (003) "eqv?" #2 "character"
+           (003) "eqv?" #3 "character"
+           (003) "eqv?" #4 "character"
+           (003) "eqv?" #5 "character"
+           (003) "eqv?" #6 "character"
+           (003) "eqv?" #7 "character"
+           (003) "eqv?" #8 "character"
+           (003) "eqv?" #9 "character"
+
+
 
 
 (gather1) "how-many" "expression" "arity-hash" "schemefied"
 comment:
 "#t"
 (003) "append"
-      "schemefied"
-      (gather) (003) "-" "how-many" 1
-               (tails) (002) "length"
-                             (002) "flatten" "schemefied"
-                       "expression"
-               "arity-hash"
+      "schemefied"
+      (gather) (003) "-" "how-many" 1
+               (tails) (002) "length"
+                             (002) "flatten" "schemefied"
+                       "expression"
+               "arity-hash"
+
+
+
 
 (gather) "how-many" "expression" "arity-hash"
 comment:
 (002) "zero?" "how-many"
 "'()"
 
+
+
+
 (gather) "how-many" "expression" "arity-hash"
 comment:
 (application?) "expression"
-(gather1) "how-many" 
-          "expression" 
-          "arity-hash" 
-          (schemefy) "expression" "arity-hash"
+(gather1) "how-many" 
+          "expression" 
+          "arity-hash" 
+          (schemefy) "expression" "arity-hash"
+
+
+
 
 (gather) "how-many" "expression" "arity-hash"
 comment:
 "#t"
 (003) "cons" (002) "car" "expression"
-             (gather) (003) "-" "how-many" 1
-                      (002) "cdr" "expression"
-                      "arity-hash"
+             (gather) (003) "-" "how-many" 1
+                      (002) "cdr" "expression"
+                      "arity-hash"
+
+
+
 
 (schemefy2) "expression" "arity-hash" "schemefied"
 comment:
 "#t"
-(003) "cons" 
-      (function) "expression"
-      (003) "cons"
-            "schemefied"
-            (gather) (003) "-"
-                           (arity) "arity-hash" 
-                                   (function) "expression"
-                           1
-                     (tails) (003) "+"
-                                   1
-                                   (002) "length"
-                                         (002) "flatten" "schemefied"
-                             "expression"
-                     "arity-hash"
+(003) "cons" 
+      (function) "expression"
+      (003) "cons"
+            "schemefied"
+            (gather) (003) "-"
+                           (arity) "arity-hash" 
+                                   (function) "expression"
+                           1
+                     (tails) (003) "+"
+                                   1
+                                   (002) "length"
+                                         (002) "flatten" "schemefied"
+                             "expression"
+                     "arity-hash"
+
+
+
 
 (schemefy1) "expression" "arity-hash"
 comment: (1 2 3) ((+ . 2) (square . 1) (zero . 0))
 (002) "not" (application?) "expression"
 (002) "car" "expression"
 
+
+
+
 (schemefy1) "expression" "arity-hash"
 comment: ((zero) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
 (002) "zero?" (arity) "arity-hash" (function) "expression"
 (002) "car" "expression"
 
+
+
+
 (schemefy1) "expression" "arity-hash"
 comment: ((+) (+) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
 (double-application?) "expression"
 (schemefy2) "expression"
-            "arity-hash" 
-            (schemefy1) (002) "cdr" "expression"
-                        "arity-hash"
+            "arity-hash" 
+            (schemefy1) (002) "cdr" "expression"
+                        "arity-hash"
+
+
+
 
 (schemefy1) "expression" "arity-hash"
 comment: ((+) 1 2 3) ((+ . 2) (square . 1) (zero . 0))
 (application?) "expression"
 (003) "cons" (function) "expression"
-             (gather) (arity) "arity-hash" (function) "expression"
-                      (002) "cdr" "expression"
-                      "arity-hash"
+             (gather) (arity) "arity-hash" (function) "expression"
+                      (002) "cdr" "expression"
+                      "arity-hash"
+
+
+
 
 (schemefy) "expression" "arity-hash"
 comment: returns a scheme expression
 "#t"
 (002) "list" (schemefy1) "expression" "arity-hash"
 
+
+
+
 (double-application?) "expression"
 comment: empty "expression" -> is it a double application
 (002) "null?" "expression"
 "#f"
+
+
+
 
 (double-application?) "expression"
 comment: empty tail "expression" -> is it a double application
 (002) "null?" (002) "cdr" "expression"
 "#f"
 
+
+
+
 (double-application?) "expression"
 comment: two pairs "expression" -> is it a double application
 "#t"
 (003) "and" (002) "pair?" (002) "car" "expression"
-            (002) "pair?" (002) "cadr" "expression"
+            (002) "pair?" (002) "cadr" "expression"
+
+
+
 
 (function) "expression"
 comment: (+) 1 2
 "#t"
 (002) "caar" "expression"
-          
+          
 (application?) "expression"
 comment: (+) 1 2
 "#t"
 (003) "and" (002) "not" (002) "null?" "expression"
-            (002) "pair?" (002) "car" "expression"
+            (002) "pair?" (002) "car" "expression"
+
+
+
 
 (primitives)
 comment: definitions for the primitives
 "#t"
 (002) "quote"
-      (010) "begin"
-            (003) "define-macro" 
-                  (003) let* "a" "b"
-                  (002) "quasiquote" (003) "let*" (002) "unquote" "a"
-                                                  (002) "unquote" "b"
-            (003) "define-macro"
-                  (003) or "a" "b"
-                  (002) "quasiquote" (003) "or" (002) "unquote" "a"
-                                                (002) "unquote" "b"
-            (003) "define-macro"
-                  (003) and "a" "b"
-                  (002) "quasiquote" (003) "and" (002) "unquote" "a"
-                                                 (002) "unquote" "b"
+      (010) "begin"
+            (003) "define-macro" 
+                  (003) let* "a" "b"
+                  (002) "quasiquote" (003) "let*" (002) "unquote" "a"
+                                                  (002) "unquote" "b"
+            (003) "define-macro"
+                  (003) or "a" "b"
+                  (002) "quasiquote" (003) "or" (002) "unquote" "a"
+                                                (002) "unquote" "b"
+            (003) "define-macro"
+                  (003) and "a" "b"
+                  (002) "quasiquote" (003) "and" (002) "unquote" "a"
+                                                 (002) "unquote" "b"
+            (003) "define-macro"
+                  (003) se "a" "b"
+                  (002) "quasiquote" (003) "begin"
+                                           (002) "unquote" "a"
+                                           (002) "unquote" "b"
+            (003) "define-macro"
+                  (003) c "a" "b"
+                  (002) "quasiquote"
+                        (003) "cons"
+                              (002) "delay" (002) "unquote" "a"
+                              (002) "delay" (002) "unquote" "b"
+            (003) "define-macro"
+                  (002) quote "a"
+                  (002) "quasiquote" (002) "unquote" "a"
+            (003) "define" always "#t"
+            (003) "define" err "'err"
+            (003) "define" nil "'()"
 
-            (003) "define-macro"
-                  (003) se "a" "b"
-                  (002) "quasiquote" (003) "begin"
-                                           (002) "unquote" "a"
-                                           (002) "unquote" "b"
-            (003) "define-macro"
-                  (003) c "a" "b"
-                  (002) "quasiquote"
-                        (003) "cons"
-                              (002) "delay" (002) "unquote" "a"
-                              (002) "delay" (002) "unquote" "b"
-            (003) "define-macro"
-                  (002) quote "a"
-                  (002) "quasiquote" (002) "unquote" "a"
-            (003) "define" always "#t"
-            (003) "define" err "'err"
-            (003) "define" nil "'()"
+
+
 
 (rd) "final" "function" "list"
 comment: empty "list" -> foldr
 (002) "null?" "list"
 "final"
 
+
+
+
 (rd) "final" "function" "list"
 comment: not empty "list" -> foldr
 "#t"
 (003) "function" (1) "list"
-                 (rd) "final" "function" (!) "list"
+                 (rd) "final" "function" (!) "list"
+
+
+
 
 (first) "integer" "list"
 comment: not pair "list" -> keeps items at the front of "list"
 (002) "not" (002) "pair?" "list"
 "list"
 
+
+
+
 (first) "integer" "list"
 comment: "integer" is zero -> keeps items at the front of "list"
 (003) "=" "integer" 0
 "'()"
 
+
+
+
 (first) "integer" "list"
 comment: "integer" is positive -> keeps items at the front of "list"
 (003) ">" "integer" 0
 (c) (1) "list"
-    (first) (003) "-" "integer" 1
-            (!) "list"
+    (first) (003) "-" "integer" 1
+            (!) "list"
+
+
+
 
 (mp) "function" "list"
 comment: empty "list" -> maps "function" over the elements of "list"
 (002) "null?" "list"
 "list"
 
+
+
+
 (mp) "function" "list"
 comment: pair "list" -> maps "function" over the elements of "list"
 (002) "pair?" "list"
 (c) (002) "function" (1) "list"
-    (mp) "function" (!) "list"
+    (mp) "function" (!) "list"
+
+
+
 
 (mp) "function" "list"
 comment: not pair "list" -> maps "function" over the elements of "list"
 "#t"
 (002) "function" "list"
 
+
+
+
 (zed->gambit) "value"
 comment: not pair "value" -> converts to gambit
 (002) "not" (002) "pair?" "value"
 "value"
 
+
+
+
 (zed->gambit) "value"
 comment: pair "value" -> converts to gambit
 "#t"
 (003) "cons" (zed->gambit) (1) "value"
-             (zed->gambit) (!) "value"
+             (zed->gambit) (!) "value"
+
+
+
 
 (=) "object1" "object2"
 comment: isEqual for non-list structure items
 "#t"
 (003) "eqv?" "object1" "object2"
 
+
+
+
 (!) "pair"
 comment: takes "pair" -> returns second element
 "#t"
 (002) "force" (002) "cdr" "pair"
+
+
+
 
 (1) "pair"
 comment: takes "pair" -> returns first element
 "#t"
 (002) "force" (002) "car" "pair"
 
+
+
+
 (fi) "function" "list"
 comment: empty "list" -> keeps elements of "list" for which "function" returns #true
 (002) "null?" "list"
 "list"
 
+
+
+
 (fi) "function" "list"
 comment: keep first -> keeps elements of "list" for which "function" returns #true
 (002) "function" (1) "list"
 (c) (1) "list"
-    (fi) "function" (!) "list"
+    (fi) "function" (!) "list"
+
+
+
 
 (fi) "function" "list"
 comment: discard first -> keeps elements of "list" for which "function" returns #true
 "#t"
 (fi) "function" (!) "list"
 
+
+
+
 (arity) "arity-hash" "function"
 comment: takes a hash-table and a symbol -> returns the arity of the named function
 "#t"
 (002) "cdr" (003) "assoc" "function" "arity-hash"
 
+
+
+
 (arity-hash1) "clause"
 comment: abs (number) ((=) number 0) (0)
 "#t"
 (003) "cons" (clause-name) "clause"
-             (clause-arity) "clause"
+             (clause-arity) "clause"
+
+
+
 
 (arity-hash) "program"
 comment: "program" is a list of combined clauses -> returns a symbol-arity hash table
 "#t"
 (003) "append" (003) "map" arity-hash1 "program"
-               (003) "append"
-                     (002) "list" (003) "cons" "'ZED001" 1
-                     (099) "list"
-                           (003) "cons" "'ZED002" 2
-                           (003) "cons" "'ZED003" 3
-                           (003) "cons" "'ZED004" 4
-                           (003) "cons" "'ZED005" 5
-                           (003) "cons" "'ZED006" 6
-                           (003) "cons" "'ZED007" 7
-                           (003) "cons" "'ZED008" 8
-                           (003) "cons" "'ZED009" 9
-                           (003) "cons" "'ZED010" 10
-                           (003) "cons" "'ZED011" 11
-                           (003) "cons" "'ZED012" 12
-                           (003) "cons" "'ZED013" 13
-                           (003) "cons" "'ZED014" 14
-                           (003) "cons" "'ZED015" 15
-                           (003) "cons" "'ZED016" 16
-                           (003) "cons" "'ZED017" 17
-                           (003) "cons" "'ZED018" 18
-                           (003) "cons" "'ZED019" 19
-                           (003) "cons" "'ZED020" 20
-                           (003) "cons" "'ZED021" 21
-                           (003) "cons" "'ZED022" 22
-                           (003) "cons" "'ZED023" 23
-                           (003) "cons" "'ZED024" 24
-                           (003) "cons" "'ZED025" 25
-                           (003) "cons" "'ZED026" 26
-                           (003) "cons" "'ZED027" 27
-                           (003) "cons" "'ZED028" 28
-                           (003) "cons" "'ZED029" 29
-                           (003) "cons" "'ZED030" 30
-                           (003) "cons" "'ZED031" 31
-                           (003) "cons" "'ZED032" 32
-                           (003) "cons" "'ZED033" 33
-                           (003) "cons" "'ZED034" 34
-                           (003) "cons" "'ZED035" 35
-                           (003) "cons" "'ZED036" 36
-                           (003) "cons" "'ZED037" 37
-                           (003) "cons" "'ZED038" 38
-                           (003) "cons" "'ZED039" 39
-                           (003) "cons" "'ZED040" 40
-                           (003) "cons" "'ZED041" 41
-                           (003) "cons" "'ZED042" 42
-                           (003) "cons" "'ZED043" 43
-                           (003) "cons" "'ZED044" 44
-                           (003) "cons" "'ZED045" 45
-                           (003) "cons" "'ZED046" 46
-                           (003) "cons" "'ZED047" 47
-                           (003) "cons" "'ZED048" 48
-                           (003) "cons" "'ZED049" 49
-                           (003) "cons" "'ZED050" 50
-                           (003) "cons" "'ZED051" 51
-                           (003) "cons" "'ZED052" 52
-                           (003) "cons" "'ZED053" 53
-                           (003) "cons" "'ZED054" 54
-                           (003) "cons" "'ZED055" 55
-                           (003) "cons" "'ZED056" 56
-                           (003) "cons" "'ZED057" 57
-                           (003) "cons" "'ZED058" 58
-                           (003) "cons" "'ZED059" 59
-                           (003) "cons" "'ZED060" 60
-                           (003) "cons" "'ZED061" 61
-                           (003) "cons" "'ZED062" 62
-                           (003) "cons" "'ZED063" 63
-                           (003) "cons" "'ZED064" 64
-                           (003) "cons" "'ZED065" 65
-                           (003) "cons" "'ZED066" 66
-                           (003) "cons" "'ZED067" 67
-                           (003) "cons" "'ZED068" 68
-                           (003) "cons" "'ZED069" 69
-                           (003) "cons" "'ZED070" 70
-                           (003) "cons" "'ZED071" 71
-                           (003) "cons" "'ZED072" 72
-                           (003) "cons" "'ZED073" 73
-                           (003) "cons" "'ZED074" 74
-                           (003) "cons" "'ZED075" 75
-                           (003) "cons" "'ZED076" 76
-                           (003) "cons" "'ZED077" 77
-                           (003) "cons" "'ZED078" 78
-                           (003) "cons" "'ZED079" 79
-                           (003) "cons" "'ZED080" 80
-                           (003) "cons" "'ZED081" 81
-                           (003) "cons" "'ZED082" 82
-                           (003) "cons" "'ZED083" 83
-                           (003) "cons" "'ZED084" 84
-                           (003) "cons" "'ZED085" 85
-                           (003) "cons" "'ZED086" 86
-                           (003) "cons" "'ZED087" 87
-                           (003) "cons" "'ZED088" 88
-                           (003) "cons" "'ZED089" 89
-                           (003) "cons" "'ZED090" 90
-                           (003) "cons" "'ZED091" 91
-                           (003) "cons" "'ZED092" 92
-                           (003) "cons" "'ZED093" 93
-                           (003) "cons" "'ZED094" 94
-                           (003) "cons" "'ZED095" 95
-                           (003) "cons" "'ZED096" 96
-                           (003) "cons" "'ZED097" 97
-                           (003) "cons" "'ZED098" 98
-                           (003) "cons" "'ZED099" 99
+               (003) "append"
+                     (002) "list" (003) "cons" "'ZED001" 1
+                     (099) "list"
+                           (003) "cons" "'ZED002" 2
+                           (003) "cons" "'ZED003" 3
+                           (003) "cons" "'ZED004" 4
+                           (003) "cons" "'ZED005" 5
+                           (003) "cons" "'ZED006" 6
+                           (003) "cons" "'ZED007" 7
+                           (003) "cons" "'ZED008" 8
+                           (003) "cons" "'ZED009" 9
+                           (003) "cons" "'ZED010" 10
+                           (003) "cons" "'ZED011" 11
+                           (003) "cons" "'ZED012" 12
+                           (003) "cons" "'ZED013" 13
+                           (003) "cons" "'ZED014" 14
+                           (003) "cons" "'ZED015" 15
+                           (003) "cons" "'ZED016" 16
+                           (003) "cons" "'ZED017" 17
+                           (003) "cons" "'ZED018" 18
+                           (003) "cons" "'ZED019" 19
+                           (003) "cons" "'ZED020" 20
+                           (003) "cons" "'ZED021" 21
+                           (003) "cons" "'ZED022" 22
+                           (003) "cons" "'ZED023" 23
+                           (003) "cons" "'ZED024" 24
+                           (003) "cons" "'ZED025" 25
+                           (003) "cons" "'ZED026" 26
+                           (003) "cons" "'ZED027" 27
+                           (003) "cons" "'ZED028" 28
+                           (003) "cons" "'ZED029" 29
+                           (003) "cons" "'ZED030" 30
+                           (003) "cons" "'ZED031" 31
+                           (003) "cons" "'ZED032" 32
+                           (003) "cons" "'ZED033" 33
+                           (003) "cons" "'ZED034" 34
+                           (003) "cons" "'ZED035" 35
+                           (003) "cons" "'ZED036" 36
+                           (003) "cons" "'ZED037" 37
+                           (003) "cons" "'ZED038" 38
+                           (003) "cons" "'ZED039" 39
+                           (003) "cons" "'ZED040" 40
+                           (003) "cons" "'ZED041" 41
+                           (003) "cons" "'ZED042" 42
+                           (003) "cons" "'ZED043" 43
+                           (003) "cons" "'ZED044" 44
+                           (003) "cons" "'ZED045" 45
+                           (003) "cons" "'ZED046" 46
+                           (003) "cons" "'ZED047" 47
+                           (003) "cons" "'ZED048" 48
+                           (003) "cons" "'ZED049" 49
+                           (003) "cons" "'ZED050" 50
+                           (003) "cons" "'ZED051" 51
+                           (003) "cons" "'ZED052" 52
+                           (003) "cons" "'ZED053" 53
+                           (003) "cons" "'ZED054" 54
+                           (003) "cons" "'ZED055" 55
+                           (003) "cons" "'ZED056" 56
+                           (003) "cons" "'ZED057" 57
+                           (003) "cons" "'ZED058" 58
+                           (003) "cons" "'ZED059" 59
+                           (003) "cons" "'ZED060" 60
+                           (003) "cons" "'ZED061" 61
+                           (003) "cons" "'ZED062" 62
+                           (003) "cons" "'ZED063" 63
+                           (003) "cons" "'ZED064" 64
+                           (003) "cons" "'ZED065" 65
+                           (003) "cons" "'ZED066" 66
+                           (003) "cons" "'ZED067" 67
+                           (003) "cons" "'ZED068" 68
+                           (003) "cons" "'ZED069" 69
+                           (003) "cons" "'ZED070" 70
+                           (003) "cons" "'ZED071" 71
+                           (003) "cons" "'ZED072" 72
+                           (003) "cons" "'ZED073" 73
+                           (003) "cons" "'ZED074" 74
+                           (003) "cons" "'ZED075" 75
+                           (003) "cons" "'ZED076" 76
+                           (003) "cons" "'ZED077" 77
+                           (003) "cons" "'ZED078" 78
+                           (003) "cons" "'ZED079" 79
+                           (003) "cons" "'ZED080" 80
+                           (003) "cons" "'ZED081" 81
+                           (003) "cons" "'ZED082" 82
+                           (003) "cons" "'ZED083" 83
+                           (003) "cons" "'ZED084" 84
+                           (003) "cons" "'ZED085" 85
+                           (003) "cons" "'ZED086" 86
+                           (003) "cons" "'ZED087" 87
+                           (003) "cons" "'ZED088" 88
+                           (003) "cons" "'ZED089" 89
+                           (003) "cons" "'ZED090" 90
+                           (003) "cons" "'ZED091" 91
+                           (003) "cons" "'ZED092" 92
+                           (003) "cons" "'ZED093" 93
+                           (003) "cons" "'ZED094" 94
+                           (003) "cons" "'ZED095" 95
+                           (003) "cons" "'ZED096" 96
+                           (003) "cons" "'ZED097" 97
+                           (003) "cons" "'ZED098" 98
+                           (003) "cons" "'ZED099" 99
+
+
+
 
 (combine-program-clauses) "program"
 comment: "program" is a list of clauses -> returns the fully combined program after readying the clauses
 "#t"
 (combine-all) (ready-program) "program"
 
+
+
+
 (combine-all) "program"
 comment: empty "program" -> returns the fully combined program
 (002) "null?" "program"
 "program"
+
+
+
 
 (combine-all) "program"
 comment: one clause "program" -> returns the fully combined program
 (002) "null?" (002) "cdr" "program"
 "program"
 
+
+
+
 (combine-all) "program"
 comment: head clause names in "program" agree -> returns the fully combined program
 (003) "eq?" (clause-name) (002) "car" "program"
-            (clause-name) (002) "cadr" "program"
+            (clause-name) (002) "cadr" "program"
 (combine-all) (combine-head-clauses) "program"
+
+
+
 
 (combine-all) "program"
 comment: head clause names in "program" do not agree -> returns the fully combined program
 (002) "not" (003) "eq?" (clause-name) (002) "car" "program"
-                        (clause-name) (002) "cadr" "program"
+                        (clause-name) (002) "cadr" "program"
 (003) "cons" (002) "car" "program"
-             (combine-all) (002) "cdr" "program"
+             (combine-all) (002) "cdr" "program"
+
+
+
 
 (ready-program) "program"
 comment: "program" is a list of clauses -> readies the program
 "#t"
 (003) "map" ready-clause "program"
 
+
+
+
 (ready-clause) "clause"
 comment: ((abs) number) ((=) number 0) (0)
 "#t"
 (003) "cons" (002) "caaar" "clause"
-             (003) "cons" (002) "cdar" "clause"
-                          (002) "cdr" "clause"
+             (003) "cons" (002) "cdar" "clause"
+                          (002) "cdr" "clause"
+
+
+
 
 (combine-head-clauses) "program"
 comment: "program" is a list of clauses -> combines the first two
 "#t"
 (003) "cons" (combine-clauses) (002) "car" "program" (002) "cadr" "program"
-             (002) "cddr" "program"
+             (002) "cddr" "program"
+
+
+
 
 (combine-clauses) "clause1" "clause2"
 comment: takes two clauses -> combines them
 "#t"
 (003) "cons" (clause-name-agree) "clause1" "clause2"
-             (003) "cons" (clause-arguments-agree) "clause1" "clause2"
-                          (003) "append" (clause-body) "clause1"
-                                         (clause-body) "clause2"
+             (003) "cons" (clause-arguments-agree) "clause1" "clause2"
+                          (003) "append" (clause-body) "clause1"
+                                         (clause-body) "clause2"
+
+
+
 
 (clause-arguments-agree) "clause1" "clause2"
 comment: takes two clauses -> returns the common clause arguments or signals err
 (003) "equal?" (clause-arguments) "clause1"
-               (clause-arguments) "clause2"
+               (clause-arguments) "clause2"
 (clause-arguments) "clause1"
+
+
+
 
 (clause-name-agree) "clause1" "clause2"
 comment: takes two clauses -> returns the common clause name or signals err
 (003) "eq?" (clause-name) "clause1"
-            (clause-name) "clause2"
+            (clause-name) "clause2"
 (clause-name) "clause1"
+
+
+
 
 (clause-body) "clause"
 comment: abs (number) ((=) number 0) (0)
 "#t"
 (002) "cddr" "clause"
 
+
+
+
 (clause-arity) "clause"
 comment: abs (number) ((=) number 0) (0)
 "#t"
 (002) "length" (clause-arguments) "clause"
+
+
+
 
 (clause-arguments) "clause"
 comment: abs (number) ((=) number 0) (0)
 "#t"
 (002) "cadr" "clause"
 
+
+
+
 (clause-name) "clause"
 comment: abs (number) ((=) number 0) (0)
 "#t"
 (002) "car" "clause"
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #@ -> returns characters for constructing an identifier
 (003) "char=?" "character" #@
 (003) "list" #@ #@
 
+
+
+
 (symbol-character) "character"
 comment: "character" is #[ -> returns characters for constructing an identifier
 (003) "char=?" "character" #[
 (003) "list" #@ #1
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #] -> returns characters for constructing an identifier
 (003) "char=?" "character" #]
 (003) "list" #@ #2
 
+
+
+
 (symbol-character) "character"
 comment: "character" is #{ -> returns characters for constructing an identifier
 (003) "char=?" "character" #{
 (003) "list" #@ #3
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #} -> returns characters for constructing an identifier
 (003) "char=?" "character" #}
 (003) "list" #@ #4
 
+
+
+
 (symbol-character) "character"
 comment: "character" is #' -> returns characters for constructing an identifier
 (003) "char=?" "character" #'
 (003) "list" #@ #q
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #` -> returns characters for constructing an identifier
 (003) "char=?" "character" #`
 (003) "list" #@ #Q
 
+
+
+
 (symbol-character) "character"
 comment: "character" is #, -> returns characters for constructing an identifier
 (003) "char=?" "character" #,
 (003) "list" #@ #c
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #: -> returns characters for constructing an identifier
 (003) "char=?" "character" #:
 (003) "list" #@ #C
 
+
+
+
 (symbol-character) "character"
 comment: "character" is #; -> returns characters for constructing an identifier
 (003) "char=?" "character" #;
 (003) "list" #@ #s
+
+
+
 
 (symbol-character) "character"
 comment: "character" is #\ -> returns characters for constructing an identifier
 (003) "char=?" "character" #\
 (003) "list" #@ #b
 
+
+
+
 (symbol-character) "character"
 comment: "character" has a graphical representation -> returns characters for constructing an identifier
 "#t"
 (002) "list" "character"
 
+
+
+
 (zedefy) "string"
 comment: takes "string" -> prepends ""ZED"" and returns a symbol
 "#t"
 (002) "string->symbol"
-      (002) "list->string"
-            (003) "append"
-                  (004) "list" #Z #E #D
-                  (002) "flatten" 
-                        (003) "map"
-                              symbol-character
-                              (002) "string->list" "string"
+      (002) "list->string"
+            (003) "append"
+                  (004) "list" #Z #E #D
+                  (002) "flatten" 
+                        (003) "map"
+                              symbol-character
+                              (002) "string->list" "string"
+
+
+
 
 (tails) "number" "list"
 comment: empty "list" -> removes "number" elements from the head of "list"
 (002) "null?" "list"
 "list"
 
+
+
+
 (tails) "number" "list"
 comment: "number" is zero -> removes "number" elements from the head of "list"
 (003) "=" "number" 0
 "list"
 
+
+
+
 (tails) "number" "list"
 comment: number is positive -> removes "number" elements from the head of "list"
 (003) ">" "number" 0
 (tails) (003) "-" "number" 1
-        (002) "cdr" "list"
+        (002) "cdr" "list"
+
+
+
 
 ("flatten") "object"
 comment: empty object -> flattens object into a list
 (002) "null?" "object"
 "object"
 
+
+
+
 ("flatten") "object"
 comment: not pair object -> flattens object into a list
 (002) "not" (002) "pair?" "object"
 (002) "list" "object"
+
+
+
 
 ("flatten") "object"
 comment: pair object -> flattens object into a list
