@@ -1,4 +1,93 @@
 
+
+
+(flexefy) "part"
+comment:
+(002) "symbol?" "part"
+(flexefy1) (002) "string->list" (002) "symbol->string" "part"
+
+(flexefy) "part"
+comment:
+(002) "string?" "part"
+(002) "string->symbol" "part"
+
+(flexefy) "part"
+comment:
+(002) "exact?" "part"
+"part"
+
+(flexefy) "part"
+comment:
+"#t"
+(002) "string->number" (003) "string-append"
+                             "#e"
+                             (002) "number->string" "part"
+
+(symbolize) "part"
+comment:
+(002) "symbol?" "part"
+(zedefy) (002) "symbol->string" "part"
+
+(symbolize) "part"
+comment:
+(002) "string?" "part"
+(002) "string->symbol" "part"
+
+(namefy) "part"
+comment:
+(002) "pair?" "part"
+(002) "list" (symbolize) (002) "car" "part"
+
+(namefy) "part"
+comment:
+"#t"
+(flexefy) "part"
+
+(programize) "program" "arity-hash"
+comment: 
+"#t"
+(003) "cons" "'begin" (map-with) functionize "program" "arity-hash"
+
+(condefy) "expressions"
+comment:
+(002) "null?" "expressions"
+"expressions"
+
+(condefy) "expressions"
+comment:
+"#t"
+(003) "cons" (003) "append" (002) "car" "expressions"
+                            (002) "cadr" "expressions"
+             (condefy) (002) "cddr" "expressions"
+
+(functionize) "clause" "arity-hash"
+comment:
+"#t"
+(004) "list" "'define"
+             (003) "cons" (clause-name) "clause"
+                          (clause-arguments) "clause"
+             (003) "cons"
+                   "'cond"
+                   (003) "append"
+                         (condefy) (map-with) schemefy 
+                                              (clause-body) "clause"
+                                              "arity-hash"
+                         (002) "list"
+                               (003) "list" "'else" "'ZEDerr"
+
+(map-with) "function" "list" "extra"
+comment:
+(002) "null?" "list"
+"list"
+
+(map-with) "function" "list" "extra"
+comment:
+"#t"
+(003) "cons" (003) "function" (002) "car" "list" "extra"
+             (map-with) "function"
+                        (002) "cdr" "list"
+                        "extra"
+
 (gather-count?) "symbol"
 comment:
 "#t"
