@@ -118,6 +118,36 @@ comment:
 (debug-sentences) "sentences"
 comment:
 "#t"
+(debug-sentences1) 
+  "sentences" 
+  (002) "cdr" (gather-verb) (002) "car" 
+                                  "sentences"
+
+(debug-sentences1) "sentences" "gather-verb"
+comment:
+(005) "or" (003) "equal?" "gather-verb"
+                          (003) "list" #d #r
+           (003) "equal?" "gather-verb"
+                          (004) "list" #d #r #r
+           (003) "equal?" "gather-verb"
+                          (003) "list" #g #r
+           (003) "equal?" "gather-verb"
+                          (004) "list" #g #r #r
+(003) "cons" 
+      (read-sentence) (002) "car" "sentences"
+      (003) "cons"
+            (read-sentence) (002) "cadr" 
+                                  "sentences"
+            (003) "cons"
+                  (read-sentence) 
+                    (002) "caddr"
+                          "sentences"
+                  (debug-sentences) 
+                    (002) "cdddr" "sentences"
+
+(debug-sentences1) "sentences" "gather-verb"
+comment:
+"#t"
 (003) "cons" 
       (read-sentence) (002) "car" "sentences"
       (003) "cons"
