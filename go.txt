@@ -77,7 +77,10 @@
          (cdr (gather-verb (car sentences))))))
 
 (define (debug-sentences1 sentences gather-verb)
-  (if (or (equal? gather-verb '(#\d #\r))
+  (if (or (equal? gather-verb '(#\p #\r #\1))
+          (equal? gather-verb '(#\p #\r))
+          (equal? gather-verb '(#\d #\r #\1))
+          (equal? gather-verb '(#\d #\r))
           (equal? gather-verb '(#\d #\r #\r))
           (equal? gather-verb '(#\g #\r))
           (equal? gather-verb '(#\g #\r #\r)))
