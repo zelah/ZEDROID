@@ -1,5 +1,101 @@
 ;;; test.scm
 
+(sort2) "comparator" "jumble"
+comment:
+(002) "null?" "jumble"
+nil
+
+(sort2) "comparator" "jumble"
+comment:
+(002) "null?" (002) "cdr" "jumble"
+"jumble"
+
+(sort2) "comparator" "jumble"
+comment:
+"#t"
+(sort2) "comparator" 
+        (003) "cons"
+              (merge) "comparator"
+                      (002) "car" "jumble"
+                      (002) "cadr" "jumble"
+              (sort2) "comparator"
+                      (002) "cddr" "jumble"
+
+(sort1) "jumble"
+comment:
+"#t"
+(003) "map" "list" "jumble"
+
+(sort) "comparator" "jumble"
+comment:
+"#t"
+(002) "car" (sort2) "comparator" (sort1) "jumble"
+
+(merge) "comparator" "list1" "list2"
+comment:
+(002) "null?" "list1"
+"list2"
+
+(merge) "comparator" "list1" "list2"
+comment:
+(002) "null?" "list2"
+"list1"
+
+(merge) "comparator" "list1" "list2"
+comment:
+(002) "not" 
+      (003) "comparator"
+            (002) "car" "list2" 
+            (002) "car" "list1"
+(003) "cons" 
+      (002) "car" "list1"
+      (merge) "comparator"
+              (002) "cdr" "list1"
+              "list2"
+
+(merge) "comparator" "list1" "list2"
+comment:
+"#t"
+(003) "cons"
+      (002) "car" "list2"
+      (merge) "comparator"
+              "list1"
+              (002) "cdr" "list2"
+
+(sentence-less?) "sentence1" "sentence2"
+comment:
+(002) "null?" "sentence1"
+"#t"
+
+(sentence-less?) "sentence1" "sentence2"
+comment:
+(002) "null?" "sentence2"
+"#f"
+
+(sentence-less?) "sentence1" "sentence2"
+comment:
+(character-less?) (002) "car" "sentence1"
+                  (002) "car" "sentence2"
+"#t"
+
+(sentence-less?) "sentence1" "sentence2"
+comment:
+(character-less?) (002) "car" "sentence2"
+                  (002) "car" "sentence1"
+"#f"
+
+(sentence-less?) "sentence1" "sentence2"
+comment:
+"#t"
+(sentence-less?) (002) "cdr" "sentence1"
+                 (002) "cdr" "sentence2"
+
+(character-less?) "character1" "character2"
+comment:
+"#t"
+(003) "<" (002) "char->integer" "character1"
+          (002) "char->integer" "character2"
+
 (grr) "garbage" "value"
 comment:
 "#t"
@@ -125,7 +221,13 @@ comment:
 
 (debug-sentences1) "sentences" "gather-verb"
 comment:
-(005) "or" (003) "equal?" "gather-verb"
+(008) "or" (003) "equal?" "gather-verb"
+                          (004) "list" #p #r #1
+           (003) "equal?" "gather-verb"
+                          (003) "list" #p #r
+           (003) "equal?" "gather-verb"
+                          (004) "list" #d #r #1
+           (003) "equal?" "gather-verb"
                           (003) "list" #d #r
            (003) "equal?" "gather-verb"
                           (004) "list" #d #r #r
