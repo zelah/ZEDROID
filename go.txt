@@ -520,16 +520,19 @@
 (define ZEDwrap16 list)
  
 (define (c1)
-  (let ((i (open-input-file "GAMBIT1.txt")))
+  (let ((i (open-input-file (string-append (ROOT) (GAMBIT1)))))
     (read-all! i)))
  
 (define (c2)
-  (let ((i (open-input-file "GAMBIT2.txt")))
+  (let ((i (open-input-file (string-append (ROOT) (GAMBIT2)))))
     (read-all! i)))
  
 (define (g1)
-  (load "GAMBIT1.txt"))
+  (load (string-append (ROOT) (GAMBIT1))))
  
 (define (g2)
-  (load "GAMBIT2.txt"))
+  (load (string-append (ROOT) (GAMBIT2))))
  
+(define (ROOT) "/mnt/sdcard/gambit/")
+(define (GAMBIT1) "GAMBIT1.txt")
+(define (GAMBIT2) "GAMBIT2.txt")
