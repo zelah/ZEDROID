@@ -1,5 +1,5 @@
 ;;; go.scm
-
+ 
 (define-macro (ZEDc a b) `(cons (delay ,a) (delay ,b)))
  
 (define-macro (ZEDse a b) `(begin ,a ,b))
@@ -12,6 +12,10 @@
  
 (define-macro (ZEDquote a) `(quote ,a))
  
+(define ZEDnil '())
+
+(define ZEDerr 'err)
+
 (define (filter predicate list) (if (null? list) ZEDnil (if (predicate (car list)) (cons (car list) (filter predicate (cdr list))) (filter predicate (cdr list)))))
  
 (define (comp-c4 TEMP GAMBIT) (cond ((ZEDalways) (write-all! GAMBIT (strip (read-all! TEMP)))) (else ZEDerr)))
@@ -34,15 +38,15 @@
  
 (define (when-file-exists path) (cond ((file-exists? path) (delete-file path)) (else ZEDerr))) 
  
-(define (comp-c source-port) (read-line source-port) (cond ((ZEDalways) (comp-c1 source-port (open-input-file (string-append (root) "PRELUDE.scm")) (string-append (root) "TEMP.TEMP") (begin (when-file-exists (string-append (root) "TEMP.TEMP")) (open-output-file (string-append (root) "TEMP.TEMP"))) (begin (when-file-exists (string-append (root) "GAMBIT2.txt")) (open-output-file (string-append (root) "GAMBIT2.txt"))) debug-sentences)) (else ZEDerr)))
+(define (comp-c source-port) (read-line source-port) (cond ((ZEDalways) (comp-c1 source-port (open-input-file (string-append (root) "PRELUDE.txt")) (string-append (root) "TEMP.TEMP") (begin (when-file-exists (string-append (root) "TEMP.TEMP")) (open-output-file (string-append (root) "TEMP.TEMP"))) (begin (when-file-exists (string-append (root) "GAMBIT2.txt")) (open-output-file (string-append (root) "GAMBIT2.txt"))) debug-sentences)) (else ZEDerr)))
  
-(define (comp-b source-port) (read-line source-port) (cond ((ZEDalways) (comp-b1 source-port (open-input-file (string-append (root) "PRELUDE.scm")) (string-append (root) "TEMP.TEMP") (begin (when-file-exists (string-append (root) "TEMP.TEMP")) (open-output-file (string-append (root) "TEMP.TEMP"))) (begin (when-file-exists (string-append (root) "GAMBIT1.txt")) (open-output-file (string-append (root) "GAMBIT1.txt"))) read-sentences)) (else ZEDerr)))
+(define (comp-b source-port) (read-line source-port) (cond ((ZEDalways) (comp-b1 source-port (open-input-file (string-append (root) "PRELUDE.txt")) (string-append (root) "TEMP.TEMP") (begin (when-file-exists (string-append (root) "TEMP.TEMP")) (open-output-file (string-append (root) "TEMP.TEMP"))) (begin (when-file-exists (string-append (root) "GAMBIT1.txt")) (open-output-file (string-append (root) "GAMBIT1.txt"))) read-sentences)) (else ZEDerr)))
  
 (define (comp-a source) (cond ((ZEDalways) (begin (comp-b (open-input-file source)) (comp-c (open-input-file source)))) (else ZEDerr))) 
  
 (define (comp) (cond ((ZEDalways) (comp-a (string-append (root) (read-line)))) (else ZEDerr)))
  
-(define (root) "")
+(define (root) "/mnt/sdcard/GAMBIT/")
  
 (define (write-all! output-port program) (cond ((null? program) (close-output-port output-port)) ((ZEDalways) (begin (write-char (car program) output-port) (write-all! output-port (cdr program)))) (else ZEDerr))) 
  
@@ -75,7 +79,7 @@
       sentences
       (debug-sentences1 sentences
          (cdr (gather-verb (car sentences))))))
-
+ 
 (define (debug-sentences1 sentences gather-verb)
   (if (or (equal? gather-verb '(#\p #\r #\1))
           (equal? gather-verb '(#\p #\r))
@@ -514,19 +518,18 @@
 (define ZEDwrap15 list) 
  
 (define ZEDwrap16 list)
-
+ 
 (define (c1)
   (let ((i (open-input-file "GAMBIT1.txt")))
-    (read-line i)
     (read-all! i)))
-
+ 
 (define (c2)
   (let ((i (open-input-file "GAMBIT2.txt")))
-    (read-line i)
     (read-all! i)))
-
+ 
 (define (g1)
   (load "GAMBIT1.txt"))
-
+ 
 (define (g2)
   (load "GAMBIT2.txt"))
+ 
