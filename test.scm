@@ -66,6 +66,7 @@ comment:
                      (combine-program-clauses)
                      (by-three)
                      (debug-sentences)
+          (function-sort)
                      (discard-comments)
                      (sentences)
                      (leading-newline)
@@ -110,6 +111,7 @@ comment:
                      (combine-program-clauses)
                      (by-three)
                      (read-sentences)
+          (function-sort)
                      (discard-comments)
                      (sentences)
                      (leading-newline)
@@ -177,7 +179,7 @@ comment:
 (PRELUDE)
 comment:
 "#t"
-(003) "string-append" (ROOT) ""PRELUDE.txt""
+(003) "string-append" (ROOT) ""PRELUDE.scm""
  
 (SOURCE)
 comment:
@@ -187,7 +189,7 @@ comment:
 (ROOT)
 comment:
 "#t"
-""/mnt/sdcard/GAMBIT/""
+""/mnt/sdcard/gambit/""
  
 (not-return?) "character"
 comment:
@@ -260,13 +262,13 @@ comment:
  
 (merge) "comparator" "list1" "list2"
 comment:
-(002) "null?" "list1"
-"list2"
+(002) "null?" "list2"
+"list1"
  
 (merge) "comparator" "list1" "list2"
 comment:
-(002) "null?" "list2"
-"list1"
+(002) "null?" "list1"
+"list2"
  
 (merge) "comparator" "list1" "list2"
 comment:
@@ -290,13 +292,13 @@ comment:
  
 (sentence-less?) "sentence1" "sentence2"
 comment:
-(002) "null?" "sentence1"
-"#t"
+(002) "null?" "sentence2"
+"#f"
  
 (sentence-less?) "sentence1" "sentence2"
 comment:
-(002) "null?" "sentence2"
-"#f"
+(002) "null?" "sentence1"
+"#t"
  
 (sentence-less?) "sentence1" "sentence2"
 comment:
@@ -1129,124 +1131,93 @@ comment:
            (003) "eqv?" #8 "character"
            (003) "eqv?" #9 "character"
  
-(gather1) "how-many" "expression" "arity-hash" "schemefied"
+(stack)
 comment:
 "#t"
-(003) "append"
-      "schemefied"
-      (gather) (003) "-" "how-many" 1
-               (tails) (002) "length"
-                             (flatten) 
-                               "schemefied"
-                       "expression"
-               "arity-hash"
- 
-(gather) "how-many" "expression" "arity-hash"
-comment:
-(002) "zero?" "how-many"
 nil
  
-(gather) "how-many" "expression" "arity-hash"
-comment:
-(application?) "expression"
-(gather1) "how-many" 
-          "expression" 
-          "arity-hash" 
-          (schemefy) "expression" "arity-hash"
- 
-(gather) "how-many" "expression" "arity-hash"
+(push) "object" "stack"
 comment:
 "#t"
-(003) "cons" (002) "car" "expression"
-             (gather) (003) "-" "how-many" 1
-                      (002) "cdr" "expression"
-                      "arity-hash"
+(003) "cons" "object" "stack"
  
-(schemefy1a) "expression" "arity-hash" "schemefied"
+(pop) "stack"
 comment:
 "#t"
-(003) "cons" 
-      (function) "expression"
-      (003) "cons"
-            "schemefied"
-            (gather) (003) "-"
-                           (arity) "arity-hash" 
-                                   (function) 
-                                     "expression"
-                           1
-                     (tails) 
-                       (003) "+"
-                             1
-                             (002) "length"
-                                   (flatten) 
-                                     "schemefied"
-                       "expression"
-                     "arity-hash"
+(002) "cdr" "stack"
  
-(schemefy1) "expression" "arity-hash"
+(top) "stack"
 comment:
-(002) "not" (application?) "expression"
-(002) "car" "expression"
- 
-(schemefy1) "expression" "arity-hash"
-comment:
-(002) "zero?" (arity) "arity-hash" 
-                      (function) "expression"
-(002) "car" "expression"
- 
-(schemefy1) "expression" "arity-hash"
-comment:
-(gather-count?) (function) "expression"
-(gather) (arity) "arity-hash" (function) 
-                                "expression"
-         (002) "cdr" "expression"
-         "arity-hash"
- 
-(schemefy1) "expression" "arity-hash"
-comment:
-(double-application?) "expression"
-(schemefy1a) "expression"
-             "arity-hash" 
-             (schemefy1) (002) "cdr" "expression"
-                         "arity-hash"
- 
-(schemefy1) "expression" "arity-hash"
-comment:
-(application?) "expression"
-(003) "cons" (function) "expression"
-             (gather) (arity) "arity-hash" 
-                              (function) 
-                                "expression"
-                      (002) "cdr" "expression"
-                      "arity-hash"
+"#t"
+(002) "car" "stack"
  
 (schemefy) "expression" "arity-hash"
 comment:
 "#t"
-(002) "list" (schemefy1) "expression" "arity-hash"
+(002) "list"
+      (schemefy1) (002) "reverse" "expression" 
+                  "arity-hash"
+                  (stack)
  
-(double-application?) "expression"
+(schemefy1) "expression" "arity-hash" "stack"
 comment:
-(002) "null?" "expression"
-"#f"
+(002) "zero?" (002) "length" "expression"
+(top) "stack"
  
-(double-application?) "expression"
+(schemefy1) "expression" "arity-hash" "stack"
 comment:
-(002) "null?" (002) "cdr" "expression"
-"#f"
+(002) "not" (application?) "expression"
+(schemefy1) (pop) "expression"
+            "arity-hash"
+            (push) (top) "expression" "stack"
  
-(double-application?) "expression"
+(schemefy1) "expression" "arity-hash" "stack"
 comment:
 "#t"
-(003) "and" (002) "pair?" (002) "car" "expression"
-            (002) "pair?" (002) "cadr" 
-                                "expression"
+(schemefy1a) "expression"
+             "arity-hash"
+             "stack"
+             (function) "expression"
+ 
+(schemefy1a) "expression" "arity-hash" "stack"
+             "function"
+comment:
+"#t"
+(schemefy1aa) "expression"
+              "arity-hash"
+              "stack"
+              "function"
+              (arity) "arity-hash" "function"
+ 
+(schemefy1aa) "expression" "arity-hash" "stack"
+              "function" "arity"
+comment:
+(gather-count?) "function"
+(schemefy1) (pop) "expression"
+            "arity-hash"
+            (push) (zed->gambit) (first) "arity" 
+                                         "stack"
+                   (zed->gambit) (tails) "arity" 
+                                         "stack"
+                           
+(schemefy1aa) "expression" "arity-hash" "stack"
+              "function" "arity"
+comment:
+"#t"
+(schemefy1) (pop) "expression"
+            "arity-hash"
+            (push) (push) "function"
+                          (zed->gambit) 
+                            (first) "arity" 
+                                    "stack"
+                   (zed->gambit)
+                     (tails) "arity" "stack"
  
 (function) "expression"
 comment:
 "#t"
 (002) "caar" "expression"
-          
+ 
 (application?) "expression"
 comment:
 "#t"
@@ -1707,6 +1678,28 @@ comment:
 "#t"
 (003) "append" (flatten) (002) "car" "object" (flatten) (002) "cdr" "object"
  
+(my-flatten) "object"
+comment:
+(002) "not" (002) "pair?" "object"
+"object"
+ 
+(my-flatten) "object"
+comment:
+(002) "null?" (002) "car" "object"
+(my-flatten) (002) "cdr" "object"
+ 
+(my-flatten) "object"
+comment:
+(002) "pair?" (002) "car" "object"
+(003) "append" (my-flatten) (002) "car" "object"
+               (my-flatten) (002) "cdr" "object"
+ 
+(my-flatten) "object"
+comment:
+"#t"
+(003) "cons" (002) "car" "object"
+             (my-flatten) (002) "cdr" "object"
+ 
 (filter) "predicate" "list"
 comment:
 (002) "null?" "list"
@@ -1727,27 +1720,21 @@ comment:
 (c1)
 comment:
 "#t"
-(007) "let*" 
-      "((i" "(open-input-file" "(string-append" "(ROOT)" 
-                                                "(GAMBIT1)))))"
+(005) "let*" "((i" "(open-input-file" "(GAMBIT1))))"
       (002) "read-all!" "i"
  
 (c2)
 comment:
 "#t"
-(007) "let*" 
-      "((i" "(open-input-file" "(string-append" "(ROOT)" 
-                                                "(GAMBIT2)))))"
+(005) "let*" "((i" "(open-input-file" "(GAMBIT2))))"
       (002) "read-all!" "i"
  
 (g1)
 comment:
 "#t"
-(002) "load" (003) "string-append" (ROOT) (GAMBIT1)
+(002) "load" (GAMBIT1)
  
 (g2)
 comment:
 "#t"
-(002) "load" (003) "string-append" (ROOT) (GAMBIT2)
- 
- 
+(002) "load" (GAMBIT2)
