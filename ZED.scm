@@ -1,4 +1,4 @@
-;;; test.scm
+;;; ZED.scm
  
 (comp1baaa) "gambit" "programized"
 comment:
