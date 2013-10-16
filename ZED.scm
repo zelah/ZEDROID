@@ -1,5 +1,96 @@
 ;;; ZED.scm
- 
+
+(replace!) "go"
+comment:
+"#t"
+(006) "begin"
+      (003) "display" "";;;"" "go"
+      (003) "display" #space "go"
+      (003) "display" ""go.scm"" "go"
+      (003) "display" #newline "go"
+      (write-all!) "go" 
+                   (read-all!) (002) "open-input-file" 
+                                     (ALPHABETIZED)
+      
+
+(alpha1) "SOURCE" "ALPHABETIZED"
+comment:
+"#t"
+(003) "begin"
+      (002) "read-line" "SOURCE"
+      (write-all!) "ALPHABETIZED"
+                       (flatten)
+                       (newlines) 
+                       (by-four)
+                       (function-sort)
+                       (sentences)
+                       (leading-newline)
+                       (space-newline)
+                       (tab-replace)
+                       (newline-space-tab-repeats)
+                       (newline-space)
+                   (filter) not-return?
+                            (read-all!) "SOURCE"
+
+(alpha) "SOURCE"
+comment:
+"#t"
+(alpha1) (002) "open-input-file" "SOURCE"
+         (002) "open-output-file" (ALPHABETIZED)
+
+(newlines) "clauses"
+comment:
+(002) "null?" "clauses"
+nil
+
+(newlines) "clauses"
+comment:
+(002) "null?" (002) "cdr" "clauses"
+(002) "list" (add-between) (002) "list" #newline
+                           (002) "car" "clauses"
+
+(newlines) "clauses"
+comment:
+"#t"
+(003) "cons" 
+      (add-between) (002) "list" #newline
+                    (002) "car" "clauses"
+      (003) "cons" (003) "list" #newline #newline
+                   (newlines) (002) "cdr" "clauses"
+
+(add-between) "item" "list"
+comment:
+(002) "null?" "list"
+nil
+
+(add-between) "item" "list"
+comment:
+(002) "null?" (002) "cdr" "list"
+"list"
+
+(add-between) "item" "list"
+comment:
+"#t"
+(003) "cons" (002) "car" "list"
+             (003) "cons" "item" 
+                          (add-between)
+                            "item"
+                            (002) "cdr" "list"
+
+(by-four) "sentences"
+comment:
+(002) "null?" "sentences"
+nil
+
+(by-four) "sentences"
+comment:
+"#t"
+(003) "cons" (005) "list" (002) "car" "sentences"
+                          (002) "cadr" "sentences"
+                          (002) "caddr" "sentences"
+                          (002) "cadddr" "sentences"
+             (by-four) (002) "cddddr" "sentences"
+
 (comp1baaa) "gambit" "programized"
 comment:
 "#t"
@@ -66,8 +157,8 @@ comment:
                      (combine-program-clauses)
                      (by-three)
                      (debug-sentences)
-          (function-sort)
                      (discard-comments)
+          (function-sort)
                      (sentences)
                      (leading-newline)
                      (space-newline)
@@ -111,8 +202,8 @@ comment:
                      (combine-program-clauses)
                      (by-three)
                      (read-sentences)
-          (function-sort)
                      (discard-comments)
+          (function-sort)
                      (sentences)
                      (leading-newline)
                      (space-newline)
@@ -156,15 +247,27 @@ comment:
 (comp1) "SOURCE"
 comment:
 "#t"
-(003) "begin" (comp1a) (002) "open-input-file"
+(005) "begin" (comp1a) (002) "open-input-file"
                              "SOURCE"
               (comp1b) (002) "open-input-file"
                              "SOURCE"
- 
+              (alpha) "SOURCE"
+              (replace!) (002) "open-output-file" (GO)
+
 (comp)
 comment:
 "#t"
 (comp1) (SOURCE)
+
+(GO)
+comment:
+"#t"
+(003) "string-append" (ROOT) ""go.scm""
+
+(ALPHABETIZED)
+comment:
+"#t"
+(003) "string-append" (ROOT) ""ALPHABETIZED.txt""
  
 (GAMBIT2)
 comment:
@@ -221,7 +324,7 @@ comment:
 (rd) nil 
      "append"
      (sort) clause-less?
-            (by-three) "sentences"
+            (by-four) "sentences"
  
 (clause-less?) "clause1" "clause2"
 comment:
