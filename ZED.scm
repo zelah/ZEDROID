@@ -6,7 +6,7 @@ comment:
 (006) "begin"
       (003) "display" "";;;"" "source"
       (003) "display" #space "source"
-      (003) "display" ""go.scm"" "source"
+      (003) "display" ""test.scm"" "source"
       (003) "display" #newline "source"
       (write-all!) "source" 
                    (read-all!) (002) "open-input-file" 
