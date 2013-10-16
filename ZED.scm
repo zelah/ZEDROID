@@ -1,14 +1,14 @@
 ;;; ZED.scm
 
-(replace!) "go"
+(replace!) "test"
 comment:
 "#t"
 (006) "begin"
-      (003) "display" "";;;"" "go"
-      (003) "display" #space "go"
-      (003) "display" ""go.scm"" "go"
-      (003) "display" #newline "go"
-      (write-all!) "go" 
+      (003) "display" "";;;"" "test"
+      (003) "display" #space "test"
+      (003) "display" ""go.scm"" "test"
+      (003) "display" #newline "test"
+      (write-all!) "test" 
                    (read-all!) (002) "open-input-file" 
                                      (ALPHABETIZED)
       
@@ -252,17 +252,17 @@ comment:
               (comp1b) (002) "open-input-file"
                              "SOURCE"
               (alpha) "SOURCE"
-              (replace!) (002) "open-output-file" (GO)
+              (replace!) (002) "open-output-file" (TEST)
 
 (comp)
 comment:
 "#t"
 (comp1) (SOURCE)
 
-(GO)
+(TEST)
 comment:
 "#t"
-(003) "string-append" (ROOT) ""go.scm""
+(003) "string-append" (ROOT) ""test.scm""
 
 (ALPHABETIZED)
 comment:
